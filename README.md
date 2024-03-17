@@ -3,5 +3,5 @@
 - [Issue](https://github.com/bbbbooo/concurrency-solving/issues/1)에 Step별 해결 과정의 특징을 작성하였습니다.
 
 # Step1. Application Lock
-- [세마포아, 뮤텍스](https://github.com/bbbbooo/concurrency-solving/issues/1)
+- [세마포어, 뮤텍스](https://github.com/bbbbooo/concurrency-solving/issues/1)
 - [느낀점 - 업데이트 예정]()
