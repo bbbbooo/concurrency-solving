@@ -1,5 +1,6 @@
 package com.concurrency.concurrencysolving.domain;
 
+import com.concurrency.concurrencysolving.exception.TicketSoldOutException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,7 +37,7 @@ public class Coupon {
 
     public void reserve() {
         if (maxCouponCount <= currentCouponCount) {
-            throw new IllegalArgumentException();
+            throw new TicketSoldOutException();
         }
 
         currentCouponCount++;
