@@ -4,6 +4,8 @@ import com.concurrency.concurrencysolving.dto.CouponRequest;
 import com.concurrency.concurrencysolving.dto.CouponReserveRequest;
 import com.concurrency.concurrencysolving.service.CouponService;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class CouponController {
     private final CouponService couponService;
     private final Semaphore semaphore;
+    private final Lock lock = new ReentrantLock();
 
     /**
      * 세마포어
      * @throws com.concurrency.concurrencysolving.exception.TicketSoldOutException 티켓 매진
      */
     @PostMapping("/semaphore")
-    public ResponseEntity<String> reserve(@RequestBody CouponReserveRequest couponReserveRequest) {
+    public ResponseEntity<String> reserveWithSemaphore(@RequestBody CouponReserveRequest couponReserveRequest) {
         try {
             semaphore.acquire();
 
@@ -37,6 +40,23 @@ public class CouponController {
             return ResponseEntity.ok(Thread.currentThread().getName() + " 예약 실패");
         } finally {
             semaphore.release();
+        }
+    }
+
+    /**
+     * 뮤텍스
+     * @throws com.concurrency.concurrencysolving.exception.TicketSoldOutException 티켓 매진
+     */
+    @PostMapping("/mutex")
+    public ResponseEntity<String> reserveWithMutex(@RequestBody CouponReserveRequest couponReserveRequest) {
+        try {
+            lock.lock();
+
+            couponService.reserveCoupon(couponReserveRequest);
+            log.info(Thread.currentThread().getName() + " 예약 성공");
+            return ResponseEntity.ok("예약 완료");
+        }finally {
+            lock.unlock();
         }
     }
 
