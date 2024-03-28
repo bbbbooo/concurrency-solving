@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CouponService {
     private final CouponRepository couponRepository;
 
+
     @Transactional
     public void createCouponBySemaphore(CouponRequest couponRequest) {
         Coupon coupon = Coupon.builder()
@@ -28,6 +29,12 @@ public class CouponService {
 
     @Transactional
     public void reserveCoupon(CouponReserveRequest couponReserveRequest) {
+        Coupon coupon = couponRepository.getReferenceById(couponReserveRequest.getCouponId());
+        coupon.reserve();
+    }
+
+    @Transactional
+    public void reserveCouponWithOptimisticLock(CouponReserveRequest couponReserveRequest) {
         Coupon coupon = couponRepository.getReferenceById(couponReserveRequest.getCouponId());
         coupon.reserve();
     }

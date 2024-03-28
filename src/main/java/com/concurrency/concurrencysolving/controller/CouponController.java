@@ -60,6 +60,13 @@ public class CouponController {
         }
     }
 
+    @PostMapping("/optimistic")
+    public ResponseEntity<String> reserveWithOptimisticLock(@RequestBody CouponReserveRequest couponReserveRequest) {
+        couponService.reserveCouponWithOptimisticLock(couponReserveRequest);
+
+        return ResponseEntity.ok("예약 완료");
+    }
+
     @PostMapping
     public ResponseEntity<String> create(@RequestBody CouponRequest couponRequest) {
         couponService.createCouponBySemaphore(couponRequest);

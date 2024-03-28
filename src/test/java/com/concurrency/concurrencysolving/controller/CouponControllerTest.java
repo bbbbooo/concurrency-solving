@@ -23,7 +23,7 @@ class CouponControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void semaphoreTest() throws Exception {
+    void semaphoreTest() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         int numberOfThreads = 100;
         ExecutorService service = Executors.newFixedThreadPool(numberOfThreads);

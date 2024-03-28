@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,12 +28,17 @@ public class Coupon {
     private Long maxCouponCount;
     private Long currentCouponCount;
 
+    @Version
+    private Long version;
+
     @Builder
-    public Coupon(Long id, String couponName, Long maxCouponCount, Long currentCouponCount) {
+    public Coupon(Long id, String couponName, Long maxCouponCount, Long currentCouponCount,
+        Long version) {
         this.id = id;
         this.couponName = couponName;
         this.maxCouponCount = maxCouponCount;
         this.currentCouponCount = currentCouponCount;
+        this.version = version;
     }
 
     public void reserve() {
