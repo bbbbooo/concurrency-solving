@@ -42,6 +42,8 @@ class CouponServiceTest {
         Future<?> future3 = executorService.submit(
             () -> couponService.reserveCouponWithOptimisticLock(couponReserveRequest));
 
+
+        // then
         try {
             future.get();
             future2.get();
