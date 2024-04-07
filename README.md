@@ -4,4 +4,3 @@
 
 # Step1. Application Lock
 - [세마포어, 뮤텍스](https://github.com/bbbbooo/concurrency-solving/issues/1)
-- [느낀점 - 업데이트 예정]()
